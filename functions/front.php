@@ -185,7 +185,7 @@ add_filter('et_html_top_header', function ($top_header) {
                         <td id="fpi-title-first">FUEL PRICE INDICATOR</td>
                     </tr>
                     <tr>
-                        <td id="fpi-need-fuel"><a href="<?php echo get_bloginfo('url') . '/contact/'; ?>">Need Fuel?</a></td>
+                        <td id="fpi-need-fuel"><a href="<?php echo get_bloginfo('url') . '/contact/'; ?>">Order Now</a></td>
                     </tr>
                 </table>
             </div>
@@ -209,18 +209,20 @@ add_filter('et_html_top_header', function ($top_header) {
                     <table>
                         <tr>
                             <th>Type</th>
+                            <!-- <th>500 PPM</th> -->
                             <th>50 PPM</th>
-                            <th>500 PPM</th>
                         </tr>
                         <tr>
-                            <th>Reef</th>
-                            <?php foreach ($diesel_reef as $index => $data) : ?>
+                            <th>Inland</th>
+                            <?php foreach ($diesel_reef as $index => $data) : if ($index === 0) : continue;
+                                endif; ?>
                                 <td>R<?php echo number_format($data['cost'], 2, '.', ''); ?></td>
                             <?php endforeach; ?>
                         </tr>
                         <tr>
                             <th>Coast</th>
-                            <?php foreach ($diesel_coast as $index => $data) : ?>
+                            <?php foreach ($diesel_coast as $index => $data) : if ($index === 0) : continue;
+                                endif; ?>
                                 <td>R<?php echo number_format($data['cost'], 2, '.', ''); ?></td>
                             <?php endforeach; ?>
                         </tr>
@@ -244,6 +246,14 @@ add_filter('et_html_top_header', function ($top_header) {
 
                 <!-- data table -->
                 <div class="fpi-section-data">
+
+                    <?php
+                    // reverse petrol array so they display in correct order (low to high)
+                    $petrol_coast = array_reverse($petrol_coast);
+                    $petrol_reef = array_reverse($petrol_reef);
+
+                    ?>
+
                     <table>
                         <tr>
                             <th>Type</th>
@@ -251,7 +261,7 @@ add_filter('et_html_top_header', function ($top_header) {
                             <th>ULP 95</th>
                         </tr>
                         <tr>
-                            <th>Reef</th>
+                            <th>Inland</th>
                             <?php foreach ($petrol_reef as $index => $data) : ?>
                                 <td>R<?php echo number_format($data['cost'], 2, '.', ''); ?></td>
                             <?php endforeach; ?>
@@ -293,8 +303,8 @@ add_filter('et_html_top_header', function ($top_header) {
                 background: #ffffffeb;
                 height: auto;
                 width: 800px;
-                top: 43px;
-                right: 20vw;
+                top: 41px;
+                right: 1.5vw;
                 z-index: 1000000;
                 padding: 0 15px;
                 border-radius: 2px;
@@ -320,7 +330,7 @@ add_filter('et_html_top_header', function ($top_header) {
 
             .fpi-section-data th,
             .fpi-section-data td {
-                padding: 0 10px;
+                padding: 0 9px;
             }
 
             table#fpi-table-first {
@@ -339,49 +349,35 @@ add_filter('et_html_top_header', function ($top_header) {
                 font-size: 13px;
             }
 
+            .hide-fpi-button {
+                display: none !important;
+            }
+
+            /* 1536px */
+            @media screen and (max-width: 1536px) {}
+
             /* 1440px */
             @media screen and (max-width: 1440px) {
                 div#fpi-container {
-                    right: 10vw;
+                    right: 2vw;
                 }
             }
 
             /* 1366px */
-            @media screen and (max-width: 1440px) {
-                div#fpi-container {
-                    right: 8vw;
-                }
-            }
+            @media screen and (max-width: 1366px) {}
 
             /* 1280px */
-            @media screen and (max-width: 1280px) {
-                div#fpi-container {
-                    right: 7vw;
-                }
-            }
+            @media screen and (max-width: 1280px) {}
 
-            /* 800px */
-            @media screen and (max-width: 800px) {
-                div#fpi-container {
-                    right: 0vw;
-                    top: 9vh;
+            /* 962px */
+            @media screen and (max-width: 962px) {
+
+                div#fpi-overlay {
+                    width: 100vw;
+                    height: 100vh;
+                    position: fixed;
                     z-index: 100;
-                    border-radius: 0px;
-                }
-            }
-
-            /* 768px */
-            @media screen and (max-width: 768px) {
-                div#fpi-container {
-                    top: 11.2vh;
-                }
-            }
-
-            /* 425px */
-            @media screen and (max-width: 425px) {
-                button#fpi-disp-mob {
-                    display: block;
-                    transition: all 0.3s ease-in-out;
+                    background: #000000ba;
                 }
 
                 div#fpi-container {
@@ -395,68 +391,145 @@ add_filter('et_html_top_header', function ($top_header) {
                     z-index: 100001;
                 }
 
-                .fpi-data-box {
-                    width: 100%;
-                    display: block;
-                    min-width: 100%;
+                button#fpi-hide-mob {
+                    display: block !important;
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    background: #cba35a;
+                    position: absolute;
+                    right: -15px;
+                    top: -15px;
+                    border: none;
+                    line-height: 1.6;
+                    z-index: 12000;
                 }
 
-                .fpi-section-title>table {
-                    min-width: 100%;
-                    width: 100%;
+                div#fpi-container {
+                    right: 0vw;
+                    top: 22vh;
+                    z-index: 100;
+                    border-radius: 0px;
+                }
+
+                button#fpi-disp-mob {
+                    display: block;
+                    transition: all 0.3s ease-in-out;
+                    top: 56vh;
                 }
 
                 .fpi-section-title {
-                    padding: 0;
-                    margin-bottom: 10px;
+                    padding: 31px 10px;
                 }
 
-                th.fpi-title {
-                    writing-mode: initial;
-                    text-orientation: initial;
-                    font-size: 15px;
-                    padding: 10px 10px;
+                table#fpi-table-first {
+                    position: relative;
+                    bottom: 10px;
+                }
+
+                td#fpi-title-first {
+                    padding: 0 25px 0px;
+                }
+            }
+
+            /* 800px */
+            @media screen and (max-width: 800px) {
+                button#fpi-disp-mob {
+                    top: 24vh;
+                }
+
+                div#fpi-container {
+                    top: 11vh;
+                }
+            }
+
+            /* 768px */
+            @media screen and (max-width: 768px) {
+                button#fpi-disp-mob {
+                    top: 33vh;
+                }
+
+                div#fpi-container {
+                    top: 13vh;
+                    width: 93%;
+                }
+            }
+
+            /* 601px */
+            @media screen and (max-width: 601px) {
+                button#fpi-disp-mob {
+                    top: 29vh;
+                }
+
+                button#fpi-hide-mob {
+                    right: 15px;
+                    top: 15px;
+                }
+
+                .fpi-section-title>table {
+                    width: 100%;
+                }
+
+                .fpi-data-box {
+                    width: 100%;
+                    display: block;
+                    text-align: center;
+                    margin-bottom: 20px;
                 }
 
                 .fpi-section-data>table {
                     width: 100%;
+                }
+
+                .fpi-section-title {
+                    padding: 8px 8px;
                     text-align: center;
                     margin-bottom: 15px;
                 }
 
                 table#fpi-table-first {
                     width: 100%;
-                    margin-bottom: 15px;
+                    top: 0px;
                 }
 
-                div#fpi-overlay {
-                    width: 100vw;
-                    height: 100vh;
-                    position: fixed;
-                    background: #00000075;
-                    top: 0;
-                    left: 0;
-                    z-index: 100000;
+                div#fpi-container {
+                    top: 14vh;
+                    width: 92%;
                 }
 
-                button#fpi-hide-mob {
-                    display: block !important;
-                    position: absolute;
-                    right: -10px;
-                    top: -10px;
-                    border-radius: 50%;
-                    border: 1px solid #cba35a;
-                    width: 25px;
-                    height: 25px;
-                    line-height: 1;
-                    text-align: center;
-                    background: black;
-                    color: #cba35a;
+                th.fpi-title {
+                    writing-mode: horizontal-tb;
+                }
+            }
+
+            /* 414px */
+            @media screen and (max-width: 414px) {
+                button#fpi-disp-mob {
+                    top: 34vh;
                 }
 
-                .hide-fpi-button {
-                    right: -200px !important;
-                    transition: all 0.3s ease-in-out;
+                div#fpi-container {
+                    top: 16vh;
+                    width: 89%;
+                }
+            }
+
+            /* 375px */
+            @media screen and (max-width: 375px) {
+                button#fpi-disp-mob {
+                    top: 35vh;
+                }
+            }
+
+            /* 360px */
+            @media screen and (max-width: 360px) {
+                button#fpi-disp-mob {
+                    top: 43vh;
+                }
+
+                div#fpi-container {
+                    top: 21vh;
+                    width: 88%;
                 }
             }
         </style>

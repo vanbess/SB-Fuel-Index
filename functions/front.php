@@ -185,7 +185,7 @@ add_filter('et_html_top_header', function ($top_header) {
                         <td id="fpi-title-first">FUEL PRICE INDICATOR</td>
                     </tr>
                     <tr>
-                        <td id="fpi-need-fuel"><a href="<?php echo get_bloginfo('url') . '/contact/'; ?>">Order Now</a></td>
+                        <!-- <td id="fpi-need-fuel"><a href="<?php echo get_bloginfo('url') . '/contact/'; ?>">Order Now</a></td> -->
                     </tr>
                 </table>
             </div>
